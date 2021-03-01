@@ -7,7 +7,7 @@
          "plan": "heroku-postgresql"
       }
    ],
-   "description": "Telegram group management bot.",
+   "description": "Super Group management bot to help you for managing your pro groups",
    "env": {
       "ALLOW_EXCL": {
          "description": "Set this to True if you want ! to be a command prefix along with /",
@@ -33,16 +33,16 @@
       },      
       "OWNER_ID": {
          "description": "Your user ID as an integer.",
-         "value": "123"
+         "value": "1377620841"
       },
       "OWNER_USERNAME": {
-         "description": "Your username",
+         "description": "Your username like @alain_champion",
          "value": "username"
       },
       "DEV_USERS": {
-         "description": "ID of users who are Dev (can use /py etc.)",
-         "required": false,
-         "value": "123"
+         "description": "ID of users who are Dev (can use /py etc.) (if you dont want then keep this value 1377620841)",
+         "required": true,
+         "value": "1377620841"
       },
       "GBAN_LOGS": {
          "description": "Gban log channel, include the hyphen too: ex: -123456",
@@ -74,17 +74,17 @@
          "value": "True"
       },
       "SUDO_USERS": {
-         "description": "A space separated list of user IDs who you want to assign as sudo users.",
-         "required": false,
-         "value": "123"
+         "description": "A space separated list of user IDs who you want to assign as sudo users (if you dont want then keep this value 1377620841).",
+         "required": true,
+         "value": "1377620841"
       },
       "TIGER_USERS": {
-         "description": "A space separated list of user IDs who you wanna assign as tiger users.",
-         "required": false,
-         "value": "123"
+         "description": "A space separated list of user IDs who you wanna assign as tiger users (if you dont want then keep this value 1377620841).",
+         "required": true,
+         "value": "1377620841"
       },
       "TOKEN": {
-         "description": "Your bot token.",
+         "description": "Your Telegram bot token (required for bot to work).",
          "required": true,
          "value": ""
       },
@@ -101,7 +101,7 @@
       "WHITELIST_USERS": {
          "description": "A space separated list of user IDs who you want to assign as whitelisted - can't be banned with your bot.",
          "required": false,
-         "value": "123"
+         "value": "1377620841"
       }
    },
    "keywords": [
@@ -110,7 +110,7 @@
       "manager",
       "bot"
    ],
-   "logo": "https://telegra.ph/file/84b2017bc2f3c90f2e61c.jpg",
-   "name": "GRAND OFFICIAL",
-   "repository": "https://github.com/leobrownlee/phantom"
+   "logo": "https://telegra.ph/file/f01ea768845d3697c9ab0.jpg",
+   "name": "BLACK LEGEND",
+   "repository": "https://github.com/infotechbro/black_legend"
 }

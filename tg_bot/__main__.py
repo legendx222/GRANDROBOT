@@ -23,33 +23,52 @@ from tg_bot.modules.disable import DisableAbleCommandHandler
 from tg_bot.modules.helper_funcs.chat_status import is_user_admin
 from tg_bot.modules.helper_funcs.misc import paginate_modules
 
+def get_readable_time(seconds: int) -> str:
+    count = 0
+    ping_time = ""
+    time_list = []
+    time_suffix_list = ["s", "m", "h", "days"]
+
+    while count < 4:
+        count += 1
+        remainder, result = divmod(seconds, 60) if count < 3 else divmod(seconds, 24)
+        if seconds == 0 and remainder == 0:
+            break
+        time_list.append(int(result))
+        seconds = int(remainder)
+
+    for x in range(len(time_list)):
+        time_list[x] = str(time_list[x]) + time_suffix_list[x]
+    if len(time_list) == 4:
+        ping_time += time_list.pop() + ", "
+
+    time_list.reverse()
+    ping_time += ":".join(time_list)
+
+    return ping_time
+
 
 
 PM_START_TEXT = """
-**Hello {}, My Name is {}!** 
-I am an **SUPERB**  group management bot.
+**🅷🅴🅻🅻🅾️ {}, My Name Is *{}*!\n 
+People's sometime find *Hard* to manage their groups, *So I am here to help you*.\n
+[ᴍʏ Mⱥຮteℝ💥](t.me/alain_champion).
+ 
 You can find the list of available commands with /help.
-
 """
 
 HELP_STRINGS = """
-
 Hello! my name *{}*.
-
 *Main* commands available:
- - /start: start the bot
- - /help: PM's you this message.
- - /help <module name>: PM's you info about that module.
- - /settings:
+ ➥ /start: Start the bot
+ ➥ /alive: To check bot alive or not
+ ➥ /help <module name>: PM's you info about that module.
+ ➥ /settings:
    - in PM: will send you your settings for all supported modules.
    - in a group: will redirect you to pm, with all that chat's settings.
-
-
 {}
-And the following:
-""".format(dispatcher.bot.first_name, "" if not ALLOW_EXCL else "\nAll commands can either be used with / or !.\n")
-
-TECHNO_IMG = "https://telegra.ph/file/b50a167f05bbfe4ff7b18.jpg"
+""".format(dispatcher.bot.first_name, "" if not ALLOW_EXCL else "All commands can either be used with / or !.\n")
+TECHNO_IMG = "https://telegra.ph/file/30986427ad731596cb810.jpg"
 IMPORTED = {}
 MIGRATEABLE = []
 HELPABLE = {}
@@ -108,10 +127,10 @@ def send_help(chat_id, text, keyboard=None):
 
 
 @run_async
-def test(bot: Bot, update: Update):
-    # pprint(eval(str(update)))
-    # update.effective_message.reply_text("Hola tester! _I_ *have* `markdown`", parse_mode=ParseMode.MARKDOWN)
-    update.effective_message.reply_text("This person edited a message")
+def alain(bot: Bot, update: Update):
+    pprint(eval(str(update)))
+    update.effective_message.reply_text("📬*ʀᴇᴘᴏ ғᴏʀ ʙʟᴀᴄᴋ ʟᴇɢᴇɴᴅ ʙᴏᴛ ɪs* :- [𝙲𝙻𝙸𝙲𝙺 𝙼𝙴](GitHub.com/infotechbro/black_legend)", parse_mode=ParseMode.MARKDOWN)
+    update.effective_message.reply_text("📬*ʀᴇᴘᴏ ғᴏʀ ʙʟᴀᴄᴋ ʟᴇɢᴇɴᴅ ʙᴏᴛ ɪs* :- _[𝙲𝙻𝙸𝙲𝙺 𝙼𝙴](GitHub.com/infotechbro/black_legend)_", parse_mode=ParseMode.MARKDOWN)
     print(update.effective_message)
 
 @run_async
@@ -139,18 +158,19 @@ def start(bot: Bot, update: Update, args: List[str]):
             update.effective_message.reply_photo(
                 TECHNO_IMG,
                 PM_START_TEXT.format(escape_markdown(first_name), escape_markdown(bot.first_name), OWNER_ID),
-                parse_mode=ParseMode.MARKDOWN, reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton(text="🤝HELP🤝",
+                parse_mode=ParseMode.MARKDOWN, reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton(text="💖 HELP 💖",
                                                                        callback_data="help_back".format(bot.username)),
-                                                                                   InlineKeyboardButton(text="🧑‍💻My Creator🧑‍💻",
-                                                                       url="t.me/D3VIL_D3V")],
-                                                                                   [InlineKeyboardButton(text="ADD D3VIL BOT TO YOUR GROUP",
+                                                                                   InlineKeyboardButton(text="🎆⚡ MY CREATOR ⚡🎆",
+                                                                       url="t.me/alain_champion")],
+                                                                                   [InlineKeyboardButton(text="ADD BLACK LEGEND 🤖 IN YOUR GROUP",
                                                                        url="t.me/{}?startgroup=true".format(bot.username)),
-                                                                                   InlineKeyboardButton(text="Source Code",
-                                                                       url="https://github.com/legendx22/GRANDROBOT")
+                                                                                    InlineKeyboardButton(text="✨ USERBOT ✨",
+                                                                       url="t.me/teamishere")
                                                                                  ]]))
 
     else:
-        update.effective_message.reply_text("ZINDA HU BHAI 😀😀⚡")
+        update.effective_message.reply_text("★᯾ вℓΛ¢к ℓєgєη∂ ᯾★ Is Alive!",reply_markup=InlineKeyboardMarkup(
+                                                [[InlineKeyboardButton(text="PM For Help",url="t.me/{}?start=help".format(bot.username))]]))
 
 
 def send_start(bot, update):
@@ -201,12 +221,12 @@ def help_button(bot: Bot, update: Update):
     try:
         if mod_match:
             module = mod_match.group(1)
-            text = "Here is the help for the *{}* module:\n".format(HELPABLE[module].__mod_name__) \
+            text = "Here Is The Help For 📌 *{}* 📌 Module ☟\n".format(HELPABLE[module].__mod_name__) \
                    + HELPABLE[module].__help__
             query.message.reply_text(text=text,
                                      parse_mode=ParseMode.MARKDOWN,
                                      reply_markup=InlineKeyboardMarkup(
-                                         [[InlineKeyboardButton(text="Back", callback_data="help_back")]]))
+                                         [[InlineKeyboardButton(text="☜ Back", callback_data="help_back")]]))
 
         elif prev_match:
             curr_page = int(prev_match.group(1))
@@ -249,9 +269,9 @@ def get_help(bot: Bot, update: Update):
     # ONLY send help in PM
     if chat.type != chat.PRIVATE:
 
-        update.effective_message.reply_text("Contact me in Direct Message to get the help.",
+        update.effective_message.reply_text("Heya, Contact Me in PM to get the list of the available commands.",
                                             reply_markup=InlineKeyboardMarkup(
-                                                [[InlineKeyboardButton(text="HELP",
+                                                [[InlineKeyboardButton(text="📍 Click Me For Help 📍 ",
                                                                        url="t.me/{}?start=help".format(
                                                                            bot.username))]]))
         return
@@ -433,10 +453,10 @@ def get_settings(bot: Bot, update: Update):
     # ONLY send settings in PM
     if chat.type != chat.PRIVATE:
         if is_user_admin(chat, user.id):
-            text = "Click here to get this chat's settings, as well as yours."
+            text = "🔰 Click here to get this chat's settings, as well as yours 🔰.."
             msg.reply_text(text,
                            reply_markup=InlineKeyboardMarkup(
-                               [[InlineKeyboardButton(text="Settings",
+                               [[InlineKeyboardButton(text="🎛 CLICK HERE AND GET OP SETTINGS 🎛",
                                                       url="t.me/{}?start=stngs_{}".format(
                                                           bot.username, chat.id))]]))
         else:
@@ -467,7 +487,7 @@ def migrate_chats(bot: Bot, update: Update):
 
 
 def main():
-    test_handler = CommandHandler("test", test)
+    alain_handler = CommandHandler("alain", alain)
     start_handler = CommandHandler("start", start, pass_args=True)
 
     start_callback_handler = CallbackQueryHandler(send_start, pattern=r"bot_start")
@@ -484,7 +504,7 @@ def main():
    
     migrate_handler = MessageHandler(Filters.status_update.migrate, migrate_chats)
 
-    # dispatcher.add_handler(test_handler)
+    dispatcher.add_handler(alain_handler)
     dispatcher.add_handler(start_handler)
     dispatcher.add_handler(help_handler)
     dispatcher.add_handler(settings_handler)
